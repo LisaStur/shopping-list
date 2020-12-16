@@ -1,8 +1,9 @@
-import './App.css';
+import './App.css'
+import { ShoppingList } from './pages/ShoppingList'
 
 const App = () => {
   return (
-    <p>Hello World!</p>
+    <ShoppingList />
   )
 }
 
