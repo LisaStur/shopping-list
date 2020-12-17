@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { user } from '../reducers/user'
 
 const SIGNUP_URL = 'http://localhost:8080/users'
 const LOGIN_URL = 'http://localhost:8080/sessions'
 
 export const Login = () => {
+  const dispatch = useDispatch()
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const returnError = useSelector (store => store.user.login.errorMessage) 
+  const errorCreateUser = returnError === 'Could not create user' 
+  const errorSignIn = returnError === 'User not found' 
 
   const handleSignUp = event => {
     event.preventDefault()
@@ -17,7 +23,13 @@ export const Login = () => {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
-    .then(json => console.log(json))
+    .then(json => {
+      dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
+      dispatch(user.actions.setUserId({ userId: json.userId }))
+      dispatch(user.actions.setErrorMessage({ errorMessage: json.message}))
+      setName('')
+      setPassword('')
+    })
   }
 
   const handleLogin = event => {
@@ -29,24 +41,36 @@ export const Login = () => {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(res => res.json())
-    .then(json => console.log(json))
+    .then(json => {
+      dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
+      dispatch(user.actions.setUserId({ userId: json.userId }))
+      dispatch(user.actions.setErrorMessage({ errorMessage: json.message}))
+      setName('')
+      setPassword('')
+    })
   }
 
 
   return (
     <LoginSection>
+      <ErrorMessageSection>
+      <SignupLoginSection>
       <InputSection>
         <label>
-          <input required minLength="3" type='text' placeholder='Name' value={name} onChange={event => setName(event.target.value)}/>
+          <Input required minlength="3" type='text' placeholder='Name' value={name} onChange={event => setName(event.target.value)}/>
         </label>
         <label>
-          <input required minLength="3" type='password' placeholder='Password' value={password} onChange={event => setPassword(event.target.value)}/>
+          <Input required minLength="3" type='password' placeholder='Password' value={password} onChange={event => setPassword(event.target.value)}/>
         </label>
       </InputSection>
       <ButtonSection>
         <Button type='submit' onClick={handleSignUp}>Sign Up</Button>
         <Button type='submit' onClick={handleLogin}>Log In</Button>
       </ButtonSection>
+      </SignupLoginSection>
+      {errorCreateUser && 'Could not create user, please try another username.'}
+      {errorSignIn && 'Wrong username or password? Please try again.'}
+      </ErrorMessageSection>
     </LoginSection>
   )
 }
@@ -58,26 +82,32 @@ const LoginSection = styled.section`
   align-items: center;
   margin-top: 5px;
 `
-const InputSection = styled.div`
+const ErrorMessageSection = styled.div`
   display: flex;
   flex-direction: column;
 `
-const ButtonSection = styled.div`
+const SignupLoginSection = styled.div`
   display: flex;
   flex-direction: row;
 `
+const InputSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+`
+const Input = styled.input`
+  margin: 2px;
+  width: 100%;
+  height: 20px;
+`
+const ButtonSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+`
 const Button = styled.button`
-  background-color: #c77762;
-  border: none;
-  color: white;
-  padding: 5px;
-  height: 60px;
-  width: 60px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 5px;
+  width: 70px;
+  margin: 2px 0 2px 20px;
+  border-radius: 10px;
   cursor: pointer;
-  border-radius: 50%;
 `
