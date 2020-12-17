@@ -10,6 +10,7 @@ export const Login = () => {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const accessToken = useSelector(store => store.user.login.accessToken)
   const returnError = useSelector (store => store.user.login.errorMessage) 
   const errorCreateUser = returnError === 'Could not create user' 
   const errorSignIn = returnError === 'User not found' 
@@ -53,24 +54,26 @@ export const Login = () => {
 
   return (
     <LoginSection>
-      <ErrorMessageSection>
-      <SignupLoginSection>
-      <InputSection>
-        <label>
-          <Input required minlength="3" type='text' placeholder='Name' value={name} onChange={event => setName(event.target.value)}/>
-        </label>
-        <label>
-          <Input required minLength="3" type='password' placeholder='Password' value={password} onChange={event => setPassword(event.target.value)}/>
-        </label>
-      </InputSection>
-      <ButtonSection>
-        <Button type='submit' onClick={handleSignUp}>Sign Up</Button>
-        <Button type='submit' onClick={handleLogin}>Log In</Button>
-      </ButtonSection>
-      </SignupLoginSection>
-      {errorCreateUser && 'Could not create user, please try another username.'}
-      {errorSignIn && 'Wrong username or password? Please try again.'}
-      </ErrorMessageSection>
+      {!accessToken &&
+            <ErrorMessageSection>
+            <SignupLoginSection>
+            <InputSection>
+              <label>
+                <Input required minlength="3" type='text' placeholder='Name' value={name} onChange={event => setName(event.target.value)}/>
+              </label>
+              <label>
+                <Input required minLength="3" type='password' placeholder='Password' value={password} onChange={event => setPassword(event.target.value)}/>
+              </label>
+            </InputSection>
+            <ButtonSection>
+              <Button type='submit' onClick={handleSignUp}>Sign Up</Button>
+              <Button type='submit' onClick={handleLogin}>Log In</Button>
+            </ButtonSection>
+            </SignupLoginSection>
+            {errorCreateUser && 'Could not create user, please try another username.'}
+            {errorSignIn && 'Wrong username or password? Please try again.'}
+            </ErrorMessageSection> }
+
     </LoginSection>
   )
 }
