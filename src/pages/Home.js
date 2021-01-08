@@ -16,7 +16,6 @@ export const Home = () => {
       {accessToken && <Heading>Shopping List</Heading>}
       <Logout />
       </LoggedInHeader>
-
       <ShoppingList />
     </ShoppingSection>
   )

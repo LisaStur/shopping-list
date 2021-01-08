@@ -59,7 +59,7 @@ export const Login = () => {
             <SignupLoginSection>
             <InputSection>
               <label>
-                <Input required minlength="3" type='text' placeholder='Name' value={name} onChange={event => setName(event.target.value)}/>
+                <Input required minLength="3" type='text' placeholder='Name' value={name} onChange={event => setName(event.target.value)}/>
               </label>
               <label>
                 <Input required minLength="3" type='password' placeholder='Password' value={password} onChange={event => setPassword(event.target.value)}/>
