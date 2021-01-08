@@ -17,7 +17,6 @@ export const ShoppingList = () => {
       <ListItems />
       </>
       }
-
     </ShoppingSection>
 
   )

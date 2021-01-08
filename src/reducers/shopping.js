@@ -3,11 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   listItem: {
     item: null,
-    amount: 1,
     section: null,
     basket: null,
     shopper: 0,
-    update: null,
   }
 }
 export const shopping = createSlice({
@@ -17,10 +15,6 @@ export const shopping = createSlice({
     setItem: (state, action) => {
       const { item } = action.payload
       state.listItem.item = item
-    },
-    setAmount: (state, action) => {
-      const { amount } = action.payload
-      state.listItem.amount = amount
     },
     setSection: (state, action) => {
       const { section } = action.payload
@@ -33,10 +27,6 @@ export const shopping = createSlice({
     setShopper: (state, action) => {
       const { shopper } = action.payload
       state.listItem.shopper = shopper
-    },
-    setUpdate: (state, action) => {
-      const { update } = action.payload
-      state.listItem.update = update
     }
   }
 })

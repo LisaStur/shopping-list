@@ -27,7 +27,6 @@ export const AddItem = () => {
       dispatch(shopping.actions.setSection({ section: json.section }))
       dispatch(shopping.actions.setBasket({ basket: json.basket }))
       dispatch(shopping.actions.setShopper({ shopper: json.shopper }))
-      dispatch(shopping.actions.setUpdate({  }))
       setItem ('')
       setSection('')
       setBasket('')
@@ -45,7 +44,7 @@ export const AddItem = () => {
           <Input required minLength="3" type='text' placeholder='item' value={item} onChange={event => setItem(event.target.value)}/>
           <Input required minLength="3" type='text' placeholder='section' value={section} onChange={event => setSection(event.target.value)}/>
           <Input minLength="3" type='text' placeholder='basket' value={basket} onChange={event => setBasket(event.target.value)}/>
-          <AddButton type='submit' onClick={handleAddItem}>Add</AddButton>
+          <AddButton disabled={!item} type='submit' onClick={handleAddItem}>Add</AddButton>
         </>
       }
 

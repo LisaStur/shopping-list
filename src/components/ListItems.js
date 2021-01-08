@@ -43,8 +43,8 @@ const ListTable = styled.table`
   padding: 5%;
 `
 const TableRow = styled.tr`
-  background-color: powderblue;
+  background-color: white;
 `
 const TableDetail = styled.td`
-  color: green;
+  color: black;
 `
